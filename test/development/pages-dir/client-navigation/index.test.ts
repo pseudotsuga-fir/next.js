@@ -51,13 +51,11 @@ describe('Client Navigation', () => {
         .text()
 
       expect(text).toBe('This is the about page.')
-      await browser.close()
     })
 
     it('should not throw error when one number type child is provided', async () => {
       const browser = await next.browser('/link-number-child')
       await assertNoRedbox(browser)
-      if (browser) await browser.close()
     })
 
     it('should navigate back after reload', async () => {
@@ -69,7 +67,6 @@ describe('Client Navigation', () => {
       await browser.back()
       await waitFor(3000)
       const text = await browser.elementByCss('#about-link').text()
-      if (browser) await browser.close()
       expect(text).toMatch(/About/)
     })
 
@@ -83,7 +80,6 @@ describe('Client Navigation', () => {
       await browser.forward()
       await waitFor(3000)
       const text = await browser.elementByCss('p').text()
-      if (browser) await browser.close()
       expect(text).toMatch(/this is the about page/i)
     })
 
@@ -110,7 +106,6 @@ describe('Client Navigation', () => {
         .text()
 
       expect(counterText).toBe('Counter: 1')
-      await browser.close()
     })
 
     it('should navigate an absolute url', async () => {
@@ -173,7 +168,6 @@ describe('Client Navigation', () => {
         .text()
 
       expect(text).toBe('This is the home.')
-      await browser.close()
     })
 
     it('should not navigate if the <a/> tag has a target', async () => {
@@ -190,7 +184,6 @@ describe('Client Navigation', () => {
       const counterText = await browser.elementByCss('#counter').text()
 
       expect(counterText).toBe('Counter: 1')
-      await browser.close()
     })
 
     it('should not navigate if the click-event is modified', async () => {
@@ -210,7 +203,6 @@ describe('Client Navigation', () => {
       const counterText = await browser.elementByCss('#counter').text()
 
       expect(counterText).toBe('Counter: 1')
-      await browser.close()
     })
 
     it('should not reload when link in svg is clicked', async () => {
@@ -222,7 +214,6 @@ describe('Client Navigation', () => {
         .waitForElementByCss('.nav-about')
 
       expect(await browser.eval('window.hello')).toBe(true)
-      await browser.close()
     })
   })
 
@@ -237,7 +228,6 @@ describe('Client Navigation', () => {
         .text()
 
       expect(text).toBe('This is the passHref prop page.')
-      await browser.close()
     })
 
     it('should redirect if passHref prop is defined in Link', async () => {
@@ -250,7 +240,6 @@ describe('Client Navigation', () => {
         .text()
 
       expect(text).toBe('This is the home.')
-      await browser.close()
     })
   })
 
@@ -295,7 +284,6 @@ describe('Client Navigation', () => {
         .text()
 
       expect(text).toBe('2')
-      await browser.close()
     })
 
     it('should remove querystring', async () => {
@@ -308,7 +296,6 @@ describe('Client Navigation', () => {
         .text()
 
       expect(text).toBe('0')
-      await browser.close()
     })
   })
 
@@ -323,7 +310,6 @@ describe('Client Navigation', () => {
       await retry(async () => {
         expect(await browser.elementByCss('p').text()).toBe('COUNT: 1')
       })
-      await browser.close()
     })
 
     it('should always replace the state', async () => {
@@ -345,8 +331,6 @@ describe('Client Navigation', () => {
 
       // Since we replace the state, back button would simply go us back to /nav
       await browser.back().waitForElementByCss('.nav-home')
-
-      await browser.close()
     })
   })
 
@@ -537,8 +521,6 @@ describe('Client Navigation', () => {
           .text()
 
         expect(counter).toBe('COUNT: 0')
-
-        await browser.close()
       })
 
       it('should scroll to the specified position on the same page', async () => {
@@ -661,8 +643,6 @@ describe('Client Navigation', () => {
           .text()
 
         expect(counter).toBe('COUNT: 0')
-
-        await browser.close()
       })
     })
 
@@ -679,8 +659,6 @@ describe('Client Navigation', () => {
           .text()
 
         expect(counter).toBe('COUNT: 1')
-
-        await browser.close()
       })
 
       it('should not run getInitialProps when removing via back', async () => {
@@ -694,7 +672,6 @@ describe('Client Navigation', () => {
           .text()
 
         expect(counter).toBe('COUNT: 0')
-        await browser.close()
       })
     })
 
@@ -711,8 +688,6 @@ describe('Client Navigation', () => {
           .text()
 
         expect(counter).toBe('COUNT: 0')
-
-        await browser.close()
       })
     })
   })
@@ -736,8 +711,6 @@ describe('Client Navigation', () => {
 
         // getInitialProps should not be called with only hash changes
         expect(counter).toBe('COUNT: 0')
-
-        await browser.close()
       })
 
       it('should increment the shallow history state counter', async () => {
@@ -756,8 +729,6 @@ describe('Client Navigation', () => {
         const counter = await browser.elementByCss('p').text()
 
         expect(counter).toBe('COUNT: 0')
-
-        await browser.close()
       })
     })
   })
@@ -778,8 +749,6 @@ describe('Client Navigation', () => {
         .elementByCss('#get-initial-props-run-count')
         .text()
       expect(getInitialPropsRunCount).toBe('getInitialProps run count: 1')
-
-      await browser.close()
     })
 
     it('should handle the back button and should not run getInitialProps', async () => {
@@ -800,8 +769,6 @@ describe('Client Navigation', () => {
         .elementByCss('#get-initial-props-run-count')
         .text()
       expect(getInitialPropsRunCount).toBe('getInitialProps run count: 1')
-
-      await browser.close()
     })
 
     it('should run getInitialProps always when rending the page to the screen', async () => {
@@ -825,8 +792,6 @@ describe('Client Navigation', () => {
         .elementByCss('#get-initial-props-run-count')
         .text()
       expect(getInitialPropsRunCount).toBe('getInitialProps run count: 2')
-
-      await browser.close()
     })
 
     it('should keep the scroll position on shallow routing', async () => {
@@ -895,7 +860,6 @@ describe('Client Navigation', () => {
       expect(await browser.url()).toBe(
         `http://localhost:${next.appPort}/nav/querystring/10#10`
       )
-      await browser.close()
     })
 
     it('should work with "Router.push"', async () => {
@@ -911,7 +875,6 @@ describe('Client Navigation', () => {
       expect(await browser.url()).toBe(
         `http://localhost:${next.appPort}/nav/querystring/10#10`
       )
-      await browser.close()
     })
 
     it('should work with the "replace" prop', async () => {
@@ -944,8 +907,6 @@ describe('Client Navigation', () => {
       stackLength = await browser.eval('window.history.length')
 
       expect(stackLength).toBe(3)
-
-      await browser.close()
     })
 
     it('should handle undefined in router.push', async () => {
@@ -1015,7 +976,6 @@ describe('Client Navigation', () => {
         .text()
 
       expect(text).toBe('This is the about page.')
-      await browser.close()
     })
 
     it('should redirect the page when loading', async () => {
@@ -1026,7 +986,6 @@ describe('Client Navigation', () => {
         .text()
 
       expect(text).toBe('This is the about page.')
-      await browser.close()
     })
   })
 
@@ -1036,7 +995,6 @@ describe('Client Navigation', () => {
       const text = await browser.elementByCss('p').text()
 
       expect(text).toBe('ComponentDidMount executed on client.')
-      await browser.close()
     })
 
     it('should work with dir/ page', async () => {
@@ -1044,7 +1002,6 @@ describe('Client Navigation', () => {
       const text = await browser.elementByCss('p').text()
 
       expect(text).toBe('ComponentDidMount executed on client.')
-      await browser.close()
     })
 
     it('should not work with /index page', async () => {
@@ -1053,7 +1010,6 @@ describe('Client Navigation', () => {
       expect(await browser.elementByCss('h2').text()).toBe(
         'This page could not be found.'
       )
-      await browser.close()
     })
 
     it('should work with / page', async () => {
@@ -1061,7 +1017,6 @@ describe('Client Navigation', () => {
       const text = await browser.elementByCss('p').text()
 
       expect(text).toBe('ComponentDidMount executed on client.')
-      await browser.close()
     })
   })
 
@@ -1083,7 +1038,6 @@ describe('Client Navigation', () => {
         .text()
 
       expect(text).toBe('This is the home.')
-      await browser.close()
     })
   })
 
@@ -1099,7 +1053,6 @@ describe('Client Navigation', () => {
           .text()
 
         expect(asPath).toBe('/as/path')
-        await browser.close()
       })
 
       it('should show the correct asPath with a Link without the as prop', async () => {
@@ -1112,7 +1065,6 @@ describe('Client Navigation', () => {
           .text()
 
         expect(asPath).toBe('/nav/as-path')
-        await browser.close()
       })
     })
 
@@ -1127,7 +1079,6 @@ describe('Client Navigation', () => {
           .text()
 
         expect(asPath).toBe('/nav/as-path-using-router')
-        await browser.close()
       })
 
       it('should navigate an absolute url on push', async () => {
@@ -1343,7 +1294,6 @@ describe('Client Navigation', () => {
       expect(await browser.elementByCss('h2').text()).toBe(
         'This page could not be found.'
       )
-      await browser.close()
     })
 
     it('should 404 on wrong casing', async () => {
@@ -1352,13 +1302,11 @@ describe('Client Navigation', () => {
       expect(await browser.elementByCss('h2').text()).toBe(
         'This page could not be found.'
       )
-      await browser.close()
     })
 
     it('should get url dynamic param', async () => {
       const browser = await next.browser('/dynamic/dynamic-part/route')
       expect(await browser.elementByCss('p').text()).toBe('dynamic-part')
-      await browser.close()
     })
 
     it('should 404 on wrong casing of url dynamic param', async () => {
@@ -1367,14 +1315,12 @@ describe('Client Navigation', () => {
       expect(await browser.elementByCss('h2').text()).toBe(
         'This page could not be found.'
       )
-      await browser.close()
     })
 
     it('should not 404 for <page>/', async () => {
       const browser = await next.browser('/nav/about/')
       const text = await browser.elementByCss('p').text()
       expect(text).toBe('This is the about page.')
-      await browser.close()
     })
 
     it('should should not contain a page script in a 404 page', async () => {
@@ -1384,7 +1330,6 @@ describe('Client Navigation', () => {
         const src = await script.getAttribute('src')
         expect(src.includes('/non-existent')).toBeFalsy()
       }
-      await browser.close()
     })
   })
 
@@ -1439,7 +1384,6 @@ describe('Client Navigation', () => {
     expect(await browser.elementByCss('p').text()).toBe(
       'This is an index.js nested in an index/ folder.'
     )
-    await browser.close()
   })
 
   it('should handle undefined prop in head client-side', async () => {
@@ -1513,8 +1457,6 @@ describe('Client Navigation', () => {
     await browser.waitForElementByCss('#relative')
     page = await browser.elementByCss('body').text()
     expect(page).toMatch(/On relative index/)
-
-    await browser.close()
   })
 })
 
