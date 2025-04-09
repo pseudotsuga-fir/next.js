@@ -7,6 +7,7 @@ import type { ComponentStackFrame } from './utils/parse-component-stack'
 import type { DebugInfo } from './types'
 import type { DevIndicatorServerState } from '../../../server/dev/dev-indicator-server-state'
 import type { HMR_ACTION_TYPES } from '../../../server/dev/hot-reloader-types'
+import { getOwnerStack } from '../errors/stitched-error'
 
 type FastRefreshState =
   /** No refresh in progress. */
@@ -108,7 +109,10 @@ function pushErrorFilterDuplicates(
   return [
     ...errors.filter((e) => {
       // Filter out duplicate errors
-      return e.event.reason.stack !== err.event.reason.stack
+      return (
+        e.event.reason.stack !== err.event.reason.stack &&
+        getOwnerStack(e.event.reason) !== getOwnerStack(err.event.reason)
+      )
     }),
     err,
   ]

@@ -13,6 +13,7 @@ import {
   getErrorByType,
   type ReadyRuntimeError,
 } from '../../../utils/get-error-by-type'
+import { getOwnerStack } from '../../../../errors/stitched-error'
 
 export type SupportedErrorEvent = {
   id: number
@@ -25,7 +26,7 @@ function getErrorSignature(ev: SupportedErrorEvent): string {
   switch (event.type) {
     case ACTION_UNHANDLED_ERROR:
     case ACTION_UNHANDLED_REJECTION: {
-      return `${event.reason.name}::${event.reason.message}::${event.reason.stack}`
+      return `${event.reason.name}::${event.reason.message}::${event.reason.stack}::${getOwnerStack(event.reason)}`
     }
   }
 }
