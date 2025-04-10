@@ -140,7 +140,7 @@ describe('hydration-error-count', () => {
 
     // Move to the last hydration error
     await goToNextErrorView(browser)
-    expect(browser).toDisplayRedbox(`
+    await expect(browser).toDisplayRedbox(`
      {
        "componentStack": "...
          <OuterLayoutRouter parallelRouterKey="children" template={<RenderFromTemplateContext>}>
@@ -174,7 +174,7 @@ describe('hydration-error-count', () => {
     `)
 
     await goToNextErrorView(browser)
-    expect(browser).toDisplayRedbox(`
+    await expect(browser).toDisplayRedbox(`
      {
        "count": 3,
        "description": "Error: runtime error",
